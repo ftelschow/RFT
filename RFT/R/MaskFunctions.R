@@ -5,6 +5,9 @@
 #------------------------------------------------------------------------------#
 # Contained functions:
 #  - mask2bndry
+#  - cont2bdry
+#  - find_holes
+#  - reverse_contour
 #
 #------------------------------------------------------------------------------#
 #' This function takes as input a binary mask and returns a boundary object as

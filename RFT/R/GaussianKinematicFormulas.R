@@ -9,6 +9,7 @@
 #  - EEC_threshold
 #
 #------------------------------------------------------------------------------#
+
 #' Computes the d-th EC density of different fields. Currently only "t" is implemented.
 #'
 #' @param x Numeric location x at which the EC density is to be evaluated

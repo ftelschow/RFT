@@ -1,15 +1,13 @@
-################################################################################
-####                                                                        ####
-####             Selection of Estimators for the LKC of Gaussian fields     ####
-####                                                                        ####
-################################################################################
+#------------------------------------------------------------------------------#
 #
-#  Implemented Estimators:
-#     - direct LKC estimator by estimating the
-#       Riemannian metric and computing the LKCs directly (1D and 2D)
-#       as in Telschow Schwartzmann (2019)
+#     Functions to estimate LKCs of Gaussian fields
 #
-################################################################# ###############
+#------------------------------------------------------------------------------#
+# Contained functions:
+#  - LKC_integral
+#
+#------------------------------------------------------------------------------#
+
 #' Computes the LKCs using the approximation of the defining integral method.
 #' The integration is carried out using the package \code{polyCub}.
 #'
