@@ -19,12 +19,12 @@
 #' @export
 EulerChar <- function( f, u, connectivity = 8 ){
   # Make vector input a matrix
-  if( is.vector(f) ){
-    f <- matrix( f, 1, length(f) )
+  if( is.vector( f ) ){
+    f <- matrix( f, 1, length( f ) )
   }
 
-  sz = dim(f)
-  N  = ifelse( sz[1]==1, 1, length(sz) )
+  sz = dim( f )
+  N  = ifelse( sz[1] == 1, 1, length( sz ) )
 
   EC <- rep( 0, length(u) )
 
@@ -33,7 +33,7 @@ EulerChar <- function( f, u, connectivity = 8 ){
 
     if( N == 1 ){
       vertices <- sum( A )
-      edges    <- sum( A[1:sz[2]-1] & A[2:sz[2]] )
+      edges    <- sum( A[ 1:sz[2] - 1 ] & A[ 2:sz[2] ] )
       EC[j]    <- vertices - edges
 
     }else if( N == 2 ){

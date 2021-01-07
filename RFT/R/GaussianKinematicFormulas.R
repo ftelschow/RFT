@@ -9,6 +9,9 @@
 #  - EEC_threshold
 #
 #------------------------------------------------------------------------------#
+# Developer notes:
+# - Style guideline NOT included
+#------------------------------------------------------------------------------#
 
 #' Computes the d-th EC density of different fields. Currently only "t" is implemented.
 #'
@@ -36,7 +39,7 @@ EC_density <- function( x, d, type = "t", df = 1 ){
       stop("Error: d must be smaller then 3. Higher dimensions are not yet implemented.")
     }
 
-  }else if( type == "gauss" ){
+  }else if( type == "z" ){
     # function appearing in all densities
     constFunc = ( 2*pi )^( -( d + 1 ) / 2 ) * exp( -x^2 / 2 )
 
@@ -65,20 +68,20 @@ EC_density <- function( x, d, type = "t", df = 1 ){
 #' @param LKC Vector estimated LKCs of the UGRFs of the field.
 #' @param type String type of field.
 #' @param df degrees of freedom.
-#' @param alpha a constant to horizontally shift the EEC curve.
 #' @return a function computing the EEC curve
 #' @export
 EEC <- function( LKC,
                  type  = "t",
-                 df    = 0,
-                 alpha = 0 ){
+                 df    = 0
+                 ){
+
   ###### Approximate the tail distribution using the GKF and EECH
   if( length( LKC ) == 2 ){
     ### 1D case
     EECf <- function(u){
               LKC[1] * EC_density( x = u, d = 0,
                                    type = type, df = df ) +
-              LKC[2] * EC_density( x = u, d = 1, type = type, df = df ) - alpha
+              LKC[2] * EC_density( x = u, d = 1, type = type, df = df )
     }
 
   }else if( length(LKC) == 3 ){
@@ -86,7 +89,7 @@ EEC <- function( LKC,
     EECf <- function(u){
               LKC[1] * EC_density( x = u, d = 0, type = type, df = df ) +
               LKC[2] * EC_density( x = u, d = 1, type = type, df = df ) +
-              LKC[3] * EC_density( x = u, d = 2, type = type, df = df ) - alpha
+              LKC[3] * EC_density( x = u, d = 2, type = type, df = df )
     }
 
   }else if( length(LKC) == 4 ){
@@ -95,7 +98,7 @@ EEC <- function( LKC,
               LKC[1] * EC_density( x = u, d = 0, type = type, df = df ) +
               LKC[2] * EC_density( x = u, d = 1, type = type, df = df ) +
               LKC[3] * EC_density( x = u, d = 2, type = type, df = df ) +
-              LKC[4] * EC_density( x = u, d = 3, type = type, df = df ) - alpha
+              LKC[4] * EC_density( x = u, d = 3, type = type, df = df )
     }
 
   }else{
@@ -121,11 +124,12 @@ EEC_threshold <- function( LKC,
                            interval = c( 0, 50 )
                            ){
 
-  tailProb <- EECf( LKC, type = df, df, alpha = alpha )
+  EEC_function <- EEC( LKC, type = type, df )
+  tailProb     <- function( u ){ EEC_function( u ) - alpha }
 
   list( threshold = uniroot( tailProb, interval )$root,
-        EEC = Vectorize(function( u ) tailProb( u ) + alpha),
+        EEC   = EEC_function,
         alpha = alpha,
-        type = type
+        type  = type
   )
 }
