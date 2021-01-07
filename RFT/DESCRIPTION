@@ -1,11 +1,21 @@
 Package: RFT
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Random Field Theory
+Date: 2020-01-06
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Fabian JE Telschow [aut, cre],
+  Armin Schwartzman [aut]
+Maintainer: Fabian JE Telschow <ftelschow@math.hu.de>
+Description: This package implements basic tools from Random Field Theory (RFT).
+    The key unknown quantities in RFT are the Lipshitz-Killing curvatures of a
+    random field. Their knowledge allows to compute the expected Euler
+    characteristic (EEC) of the excursion set of the field above a threshold.
+    This package implements different estimators of the LKCs which can be found
+    in the literature and provides basic functions to obtain the EEC curves for
+    several Gaussian realated fields such as for example fields having
+    marginally a normal, Student's, t, chi^2 or F distribution.
+    It also contains functions to compute quickly the Euler characteristic of
+    excursion sets of a function over an arbitrary domain in dimension up to 3.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
