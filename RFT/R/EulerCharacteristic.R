@@ -72,3 +72,54 @@ EulerChar <- function( f, u, connectivity = 8 ){
   }
   return( EC )
 }
+
+
+#' Estimates the Euler characteristic of the exceedance set A(u)={ s in S | f(s) >u }
+#' of a function f:S->R. 4 or 8 connectivity  is currently used and it is
+#' implemented up to dimension 2.
+#'
+#' @param f Vector/Matrix observation of a random function on a grid
+#' @param D Integer dimension of the domain
+#' @return A function computing the Euler characteristic curve
+#' @export
+EulerCharC <- function( f, Dim = NULL ){
+  # Make vector input a matrix
+  if( class( f ) != "RandomField"  ){
+    break( "Error: the input must be of class RandomField." )
+  }
+  
+  # Get the EC of the underlying domain
+  L0 = 1
+  
+  # Get the dimension of the domain
+  D = f$D
+  
+  if( D == 1 ){
+    dEC = ECcrit1D_C( f$values )
+    
+    EC = function( u ) L0 + ECcurve1D_C( f$values, dEC, u )
+    
+  }else if( D == 2 ){
+    tildeA = array( -Inf, dim = Dim + c( 2, 2, 0) )
+    tildeA[ (1:Dim[1]) + 1,  (1:Dim[2]) + 1, ] = array( c(f$values), dim = Dim )
+    dEC = ECcrit2D_C( tildeA, dim(tildeA) )
+
+    EC  = function( u ) L0 + ECcurve1D_C( matrix( f$values, f$nloc, f$N ),
+                                          matrix( dEC, f$nloc, f$N ),
+                                          u )
+    dEC = array( c(dEC), dim = Dim )
+    
+  }else if( D == 3 ){
+    
+  }else{
+    break( "Error: dimension of the domain of the RandomField must be smaller
+           than 4." )
+  }
+
+  # Create the output list
+  out <- list()
+  out[["EC"]]  <- EC
+  out[["dEC"]] <- dEC
+  
+  return( out )
+}
