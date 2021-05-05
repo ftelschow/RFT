@@ -23,10 +23,10 @@
 #' @param df Numeric degrees of freedom of the field.
 #' @return value of EC density of the chosen field x.
 #' @export
-ECdensity <- function( x,
-                       d,
-                       field = "t",
-                       df    = 1 ){
+EC_density <- function( x,
+                        d,
+                        field = "t",
+                        df    = 1 ){
   if( field == "t" ){
     # Compute the EC densities for a t-field up to D = 3
     if( d == 0 ){
@@ -64,10 +64,28 @@ ECdensity <- function( x,
 
     }else if( d == 3 ){
       constFunc * ( 4 * x^2 - 2 )
+      }
+
+  }else if( field == "T" ){
+    # Compute the EC de nsities for Hotelling T-field for vectors up to D = 3.
+    if( df[1] <= 3 ){
+      out = 0
+      if( x > 0 ){
+        for( j in 0:( df[1] - 1 ) ){
+          out = out + sphere_vol( j, df[1] ) * EC_density( sqrt( x ),
+                                                           d + j,
+                                                           field = "t",
+                                                           df    = df[2] )
+        }
+      }else{
+        out = 1
+      }
+      
+      return( out )
 
     }else{
       stop( "Error: d must be smaller then 4. Higher dimensions
-               are not yet implemented." )
+             are not yet implemented." )
     }
 
   }else if( field == "chi2" ){
@@ -75,7 +93,7 @@ ECdensity <- function( x,
     if( d == 0 ){
       ifelse( x >= 0,
               pchisq( x, df = df, lower.tail = FALSE ),
-              0 )
+              1 )
 
     }else if( d == 1 ){
       ifelse( x >= 0,
@@ -158,12 +176,12 @@ EEC <- function( LKC,
 #' bound for finding the root of the EEC curve. Default c(0,50).
 #' @return Numeric the approximated 1-alpha quantile.
 #' @export
-EEC_threshold <- function( LKC,
-                           alpha    = 0.05,
-                           field    = "t",
-                           df       = 0,
-                           interval = c( 0, 50 )
-                           ){
+  EEC_threshold <- function( LKC,
+                             alpha    = 0.05,
+                             field    = "z",
+                             df       = 0,
+                             interval = c( 0, 50 )
+                             ){
   # Get the EEC curve and subtract alpha
   EEC_function <- EEC( LKC, field = field, df )
   tailProb     <- function( u ){ EEC_function( u ) - alpha }
