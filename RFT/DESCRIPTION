@@ -1,8 +1,8 @@
 Package: RFT
 Type: Package
 Title: Random Field Theory
-Date: 2020-01-06
-Version: 0.1.0
+Version: 1.0
+Date: 2021-02-05
 Author: Fabian JE Telschow [aut, cre],
   Armin Schwartzman [aut]
 Maintainer: Fabian JE Telschow <ftelschow@math.hu.de>
@@ -16,6 +16,7 @@ Description: This package implements basic tools from Random Field Theory (RFT).
     marginally a normal, Student's, t, chi^2 or F distribution.
     It also contains functions to compute quickly the Euler characteristic of
     excursion sets of a function over an arbitrary domain in dimension up to 3.
-License: GPL-2
-Encoding: UTF-8
-LazyData: true
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.5)
+LinkingTo: Rcpp
+SystemRequirements: C++11
