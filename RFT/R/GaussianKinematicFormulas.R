@@ -47,7 +47,7 @@ ECdensity <- function( x, d, type = "t", df = 1 ){
     }else{
       stop("Error: d must be smaller then 4. Higher dimensions are not yet implemented.")
     }
-  }else if( field == "T" ){
+  }else if( type == "T" ){
     # Compute the EC densities for Hotelling T-field for vectors up to D = 3.
     if( df[1] <= 3 ){
       out = 0
@@ -55,7 +55,7 @@ ECdensity <- function( x, d, type = "t", df = 1 ){
         for( j in 0:( df[1] - 1 ) ){
           out = out + sphere_vol( j, df[1] ) * EC_density( sqrt( x ),
                                                            d + j,
-                                                           field = "t",
+                                                           type = "t",
                                                            df    = df[2] )
         }
       }else{
@@ -66,7 +66,7 @@ ECdensity <- function( x, d, type = "t", df = 1 ){
     }else{
       stop("Error: d must be smaller then 4. Higher dimensions are not yet implemented.")
     }
-  }else if( field == "chi2" ){
+  }else if( type == "chi2" ){
     # Compute the EC densities for a ch2-field up to D = 1
     if( d == 0 ){
       ifelse( x >= 0,
