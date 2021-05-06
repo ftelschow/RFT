@@ -100,7 +100,7 @@ ECdensity <- function( x, d, type = "t", df = 1 ){
 #' @param df degrees of freedom.
 #' @return Numeric the approximated 1-alpha quantile.
 #' @export
-GKFthreshold <- function( alpha = 0.05, LKC, type = "z", df = 0 ){
+GKFthreshold <- function( alpha = 0.05, LKC, type = "z", df = 0, interval = c(0, 100) ){
   ###### Approximate the tail distribution using the GKF and EECH
   if( length( LKC ) == 2 ){
     ### 1D case
@@ -128,7 +128,7 @@ GKFthreshold <- function( alpha = 0.05, LKC, type = "z", df = 0 ){
   }else{
     stop( "Error: Not yet implemented for data with a domain of dimension greater than 3!")
   }
-  list( threshold = uniroot( tailProb, interval = c( 0, 50 ) )$root,
+  list( threshold = uniroot( tailProb, interval = interval )$root,
         EEC       = Vectorize(function(u) tailProb(u) + alpha),
         alpha     = alpha,
         type      = type )
