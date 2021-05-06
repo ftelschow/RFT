@@ -34,7 +34,7 @@ ECdensity <- function( x, d, type = "t", df = 1 ){
     }else{
       stop("Error: d must be smaller then 4. Higher dimensions are not yet implemented.")
     }
-  }else if( type == "gauss" ){
+  }else if( type == "z" ){
     constFunc = (2*pi)^( -( d + 1 ) / 2 ) * exp( -x^2 / 2 )
     if( d == 0 ){
       1 - pnorm( x )
