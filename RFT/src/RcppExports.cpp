@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // tupel2index
 int tupel2index(int x0, int x1, IntegerVector Dim);
 RcppExport SEXP _RFT_tupel2index(SEXP x0SEXP, SEXP x1SEXP, SEXP DimSEXP) {
